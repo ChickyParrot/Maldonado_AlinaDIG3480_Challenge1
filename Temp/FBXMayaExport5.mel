@@ -1,0 +1,22 @@
+print "Starting maya loading and fbx conversion \n";
+	
+if (`file -q -exists "C:/Users/Gatita/Desktop/ROLLAB~1/Assets/MAYAAS~1/coin.mb"`)
+{		
+	file -o "C:/Users/Gatita/Desktop/ROLLAB~1/Assets/MAYAAS~1/coin.mb";
+	FBXExportEmbeddedTextures -v false;
+	// FBXExportHardEdges -v true;
+	FBXExportApplyConstantKeyReducer -v false;
+	FBXExportShowUI -v false;
+
+	print "Before fbx export\n";
+	FBXExport -f "C:/Users/Gatita/Desktop/ROLLAB~1/Temp/ExportedFBXFile.fbx";
+	print "after fbx export\n";
+}
+else
+	print "Could not open Maya file.";
+
+sysFile -delete "C:/Users/Gatita/Desktop/ROLLAB~1/Temp/CommandPipe";
+
+$donepipeKill = `fopen "C:/Users/Gatita/Desktop/ROLLAB~1/Temp/SyncPipeKill" "w"`;
+fwrite $donepipeKill "Done";
+fclose $donepipeKill;
